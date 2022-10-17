@@ -1,4 +1,4 @@
-const { Client, Intents, DiscordAPIError, MessageEmbed, Permissions, Modal, PermissionOverwrites } = require('discord.js');
+const { Client, DiscordAPIError, EmbedBuilder, Permissions, Modal, PermissionOverwrites, GatewayIntentBits, Partials, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
 // const { REST } = require('@discordjs/rest');
 // const { Routes } = require('discord-api-types/v9');
 // const fs = require('node:fs');
@@ -9,8 +9,16 @@ let time = new Date()
 const config = require('./config.json');
 // const { memberNicknameMention, Embed } = require('@discordjs/builders');
 const client = new Client({ 
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+    intents: [
+        GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildMessages, 
+        GatewayIntentBits.GuildMessageReactions
+    ],
+    partials: [
+        Partials.Message, 
+        Partials.Channel, 
+        Partials.Reaction
+    ],
 });
 // const discordModals = require('discord-modals');
 // discordModals(client)
@@ -57,7 +65,7 @@ client.once('ready', async() =>{
 // Give client role
 
 client.on('guildMemberAdd', async(user) => {
-    const guild = client.guilds.cache.get(('986537290010599444'))
+    const guild = client.guilds.cache.get('986537290010599444')
     let role = guild.roles.cache.get('986670070484832337')
 
     user.roles.add(role)
@@ -87,7 +95,7 @@ client.on('messageCreate', async(message) => {
     const packageEmote = guild.emojis.cache.get('986589780391391242')
 
     if(message.content.toLocaleLowerCase() === config.prefix + 'howtoorder' && message.member.permissions.has('ADMINISTRATOR')) {
-        const howToOrder = new MessageEmbed()
+        const howToOrder = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Commender commander ?')
@@ -156,7 +164,7 @@ client.on('messageCreate', async(message) => {
     if(message.content.startsWith(config.prefix)) {
         if(message.content === config.prefix + 'e' && message.member.permissions.has('ADMINISTRATOR')){
             
-            let commande = new MessageEmbed()
+            let commande = new EmbedBuilder()
                 .setColor(colors.orange)
                 .setAuthor({ name:'Time Less Shop BOT v1.5' })
                 .setTitle('Cliques sur la réaction pour commander !')
@@ -180,7 +188,7 @@ client.on('messageCreate', async(message) => {
         const guild = client.guilds.cache.get(('986537290010599444'));
         const arrow = guild.emojis.cache.get('986951896222793728');
 
-        const bcCatalogEmbed = new MessageEmbed()
+        const bcCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue base claim')
@@ -212,7 +220,7 @@ client.on('messageCreate', async(message) => {
         // Catalogue Pillage
         const kitChannel = message.guild.channels.cache.get('986978934182805556')
         if(message.content === config.prefix.toLocaleLowerCase() + 'cataloguepillage' && message.member.permissions.has('ADMINISTRATOR')) {
-            const pillageCatalogEmbed = new MessageEmbed()
+            const pillageCatalogEmbed = new EmbedBuilder()
                 .setColor(colors.orange)
                 .setAuthor({ name:'Time Less Shop BOT v1.5' })
                 .setTitle('Catalogue pillage')
@@ -246,7 +254,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Catalogue minage
-        const minorCatalogEmbed = new MessageEmbed()
+        const minorCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue mineur')
@@ -277,7 +285,7 @@ client.on('messageCreate', async(message) => {
 
         // Catalogue alchimiste
         // { name:`${arrow} `, value:'$/s', inline:true },
-        const alchimistCatalogEmbed = new MessageEmbed()
+        const alchimistCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('_atalogue alchimiste')
@@ -321,7 +329,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Catalogue PvP
-        const pvpCatalogEmbed = new MessageEmbed()
+        const pvpCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue PvP')
@@ -371,7 +379,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Catalogue Farmer
-        const farmeurCatalogEmbed = new MessageEmbed()
+        const farmeurCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue farmeurs')
@@ -406,7 +414,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Catalogue Outils
-        const outilsCatalogEmbed = new MessageEmbed()
+        const outilsCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue outils')
@@ -435,7 +443,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Catalgue Machines 
-        const machinesCatalogEmbed = new MessageEmbed()
+        const machinesCatalogEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Catalogue Machines')
@@ -453,7 +461,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Détails kits
-        const detailsKitsEmbed = new MessageEmbed()
+        const detailsKitsEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .setTitle('Détails kits')
@@ -483,7 +491,7 @@ client.on('messageCreate', async(message) => {
         }
 
         // Avis vendeur
-        const feedbackEmbed = new MessageEmbed()
+        const feedbackEmbed = new EmbedBuilder()
             .setColor(colors.orange)
             .setAuthor({ name:'Time Less Shop BOT v1.5' })
             .addFields(
@@ -649,13 +657,12 @@ client.on('messageCreate', async(message) => {
     client.on('messageReactionAdd', async(reaction, user) => {
         if(reaction.message.id == '986709881723707402') {
             // Check if reaction is good
-            
             if(reaction.partial) {
                 try{
                     await reaction.fetch()
                 } catch(error) {
                     console.error(error)
-                    return
+                    return;
                 }
             }
             // Remove reaction
@@ -677,11 +684,11 @@ client.on('messageCreate', async(message) => {
                 permissionOverwrites: [
                     {
                         id: guild.id,
-                        deny: [Permissions.FLAGS.VIEW_CHANNEL],
+                        deny: [PermissionsBitField.Flags.ViewChannel],
                     },
                     {
                         id: user.id, 
-                        allow: [Permissions.FLAGS.VIEW_CHANNEL]
+                        allow: [PermissionsBitField.Flags.ViewChannel]
                     }
                 ]
             })
@@ -694,7 +701,7 @@ client.on('messageCreate', async(message) => {
 
             // Order embed
             const packageEmote = guild.emojis.cache.get('986589780391391242')
-            const orderEmbed = new MessageEmbed()
+            const orderEmbed = new EmbedBuilder()
                 .setColor(colors.orange)
                 .setAuthor({ name:'Time Less Shop BOT v1.5', iconURL:'https://cdn.discordapp.com/icons/986537290010599444/3604ff1ae352039ce8d22afe4fa3aac1.png?size=4096' })
                 .setTitle(`Espace commande ${packageEmote}`)
@@ -717,7 +724,7 @@ client.on('messageCreate', async(message) => {
                 collector.on('collect', m => {
                     const args = m.content.split(' ')
 
-                    const sellerEmbed = new MessageEmbed()
+                    const sellerEmbed = new EmbedBuilder()
                         .setColor(colors.orange)
                         .setAuthor({ name:'Time Less Shop BOT v1.5', iconURL:'https://cdn.discordapp.com/icons/986537290010599444/3604ff1ae352039ce8d22afe4fa3aac1.png?size=4096' })
                         .setTitle('Nouvelle commande reçue !')
@@ -738,7 +745,7 @@ client.on('messageCreate', async(message) => {
 
 
                     // Recap 
-                    const recapEmbed = new MessageEmbed()
+                    const recapEmbed = new EmbedBuilder()
                     .setColor(colors.orange)
                         .setAuthor({ name:'Time Less Shop BOT v1.5', iconURL:'https://cdn.discordapp.com/icons/986537290010599444/3604ff1ae352039ce8d22afe4fa3aac1.png?size=4096' })
                         .setTitle('Récapitulatif de ta commande :')
